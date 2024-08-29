@@ -1,0 +1,10 @@
+{
+    "meta" : {
+        "baseUrl" : "/",
+        "api-baseurl" : "http://localhost:47781",
+        "cdn-baseurl" : "https://stg.sharetreats.ph",
+        "nas-baseurl" : "https://stg.sharetreats.ph"
+    },
+    "uris" : {
+    }
+}

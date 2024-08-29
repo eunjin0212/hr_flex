@@ -1,0 +1,9 @@
+{
+    "meta" : {
+        "api-baseurl" : "https://stg.sharetreats.ph",
+        "cdn-baseurl" : "https://stg.sharetreats.ph",
+        "nas-baseurl" : "https://stg.sharetreats.ph"
+    },
+    "uris" : {
+    }
+}
