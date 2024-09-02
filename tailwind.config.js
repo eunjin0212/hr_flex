@@ -67,14 +67,10 @@ module.exports = {
                 inter: ["inter", "sans-serif"],
                 nanum: ["NanumSquareRound", "sans-serif"],
             },
-        },
-        screens: {
-            'lucky': '600px',
-            'sm': '640px',
-            'md': '768px',
-            'lg': '1024px',
-            'xl': '1280px',
-            '2xl': '1536px',
+            screens: {
+                'sm': '768px', // mobile
+                'md': '1024px', // tablet
+            },
         },
     },
     plugins: [
