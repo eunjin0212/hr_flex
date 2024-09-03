@@ -3,11 +3,11 @@
         <div class="container mx-auto lg:py-[77px] pb-[50px] max-w-[600px] bg-[#F6F6F6]">
             <div>
                 <h1>Main Home</h1>
+                <loadingSpinner />
             </div>
         </div>
     </div>
     <Teleport to="body">
-        <loadingSpinner />
     </Teleport>
 </template>
 <script>
@@ -29,5 +29,7 @@ export default {
     },
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style
+  lang="scss"
+  scoped
+></style>

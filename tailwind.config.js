@@ -35,13 +35,15 @@ module.exports = {
                 },
                 'gray': {
                     '01': '#FAFAFA',
-                    '02': '#F6F6F6',
-                    '03': '#E7E7E7',
-                    '04': '#6D6D6D',
-                    '05': '#888888',
+                    '02': '#F5F5F5',
+                    '03': '#F6F6F6',
+                    '04': '#F9F9F9',
+                    '05': '#E7E7E7',
                     '06': '#B0B0B0',
-                    '07': '#4F4F4F',
-                    '08': '#3D3D3D',
+                    '07': '#888888',
+                    '08': '#6D6D6D',
+                    '09': '#4F4F4F',
+                    '10': '#3D3D3D',
                 },
                 blue: {
                     '01': '#F0FAFF',
@@ -49,6 +51,7 @@ module.exports = {
                     '03': '#B9EAFE',
                     '04': '#0CB3EB',
                     '05': '#0091C9',
+                    '06': '#2EC7FA',
                 },
                 navy: {
                     '01': '#07334A',
@@ -63,14 +66,17 @@ module.exports = {
                 },
             },
             fontFamily: {
-                'Pretendard': ['Pretendard', 'sans-serif'],
                 inter: ["inter", "sans-serif"],
                 nanum: ["NanumSquareRound", "sans-serif"],
             },
             screens: {
+                'xs': '390px',
                 'sm': '768px', // mobile
                 'md': '1024px', // tablet
             },
+            minWidth: {
+                'xs': '280px', // min mobile
+            }
         },
     },
     plugins: [

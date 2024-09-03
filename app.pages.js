@@ -3,8 +3,12 @@ module.exports = {
         template: 'public/templates/default.html',
         title: 'Redemption'
     },
-    'home' : {
+    'home': {
         template: 'public/templates/default.html',
         title: 'Redemption'
+    },
+    'smsAuth': {
+        title: 'SMS Auth',
+        path: '/smsAuth'
     },
 }

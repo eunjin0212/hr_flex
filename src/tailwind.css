@@ -4,14 +4,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://webfontworld.github.io/naver/NanumSquareRound.css');
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 html {
     scroll-behavior: smooth;
-    font-family: 'Pretendard';
+    font-family: 'inter';
     font-size: 16px;
 }
 
 body {
-    background-color: rgb(249 249 249);
+    background-color: #f9f9f9;
+}
+
+@layer components {
+    .sms-auth__header,
+    .sms-auth__footer,
+    .sms-auth__wrapper {
+        @apply max-w-screen-sm mx-auto min-w-xs
+    }
+
+    .sms-auth__header .home-logo, 
+    .sms-auth__header .back-icon {
+        @apply cursor-pointer
+    }
 }
