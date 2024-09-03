@@ -11,4 +11,8 @@ module.exports = {
         title: 'SMS Auth',
         path: '/smsAuth'
     },
+    'claimed': {
+        title: 'Claimed',
+        path: '/claimed'
+    },
 }

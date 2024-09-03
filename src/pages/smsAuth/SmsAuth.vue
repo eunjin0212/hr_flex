@@ -6,6 +6,8 @@ import Reset from '@/assets/icons/Reset.vue';
 import Delete from '@/assets/icons/Delete.vue';
 import SmallLogo from '@/assets/icons/SmallLogo.vue';
 import SmallCheck from '@/assets/icons/SmallCheck.vue';
+import BigCheck from '@/assets/icons/BigCheck.vue'
+import Error from '@/assets/icons/Error.vue'
 
 export default {
     components: {
@@ -16,6 +18,8 @@ export default {
         Delete,
         SmallLogo,
         SmallCheck,
+        BigCheck,
+        Error,
     },
     data() {
         return {
@@ -24,6 +28,7 @@ export default {
             isSubmit: false,
             focusIndex: 0,
             isAuthorize: false,
+            openModal: ''
         }
     },
     methods: {
@@ -52,8 +57,12 @@ export default {
             this.isSubmit = true;
             this.openKeypad = false;
             if (!this.validation) {
+                this.openModal = 'fail'
                 return;
             }
+
+            this.openModal = 'success'
+            // window.location.href = '/claimed'
         },
         onFocus(idx) {
             this.openKeypad = true
@@ -120,9 +129,9 @@ export default {
                       :key="idx"
                       class="relative block w-full h-12 rounded-lg max-w-12 before:rounded-lg before:w-full before:h-full before:absolute before:top-0 before:left-0 before:border before:border-blue-03"
                       :class="{
-                        'before:border-blue-06 before:border-2': passcode[idx] !== '',
-                        'before:!border-error before:border-2': !validation
-                      }"
+            'before:border-blue-06 before:border-2': passcode[idx] !== '',
+            'before:!border-error before:border-2': !validation
+        }"
                     >
                         <input
                           type="text"
@@ -138,7 +147,10 @@ export default {
                         />
                     </label>
                 </div>
-                <aside v-if="!isAuthorize" class="px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01">
+                <aside
+                  v-if="!isAuthorize"
+                  class="px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01"
+                >
                     <div class="inline-flex gap-2 text-gray-10 font-semibold text-xs leading-[18px] mb-2">
                         <SmallCheck />
                         Alert
@@ -148,9 +160,7 @@ export default {
                         Please ask for assistance to claim the treats.
                     </p>
                 </aside>
-                <button
-                  class="mt-8 max-w-[342px] block mx-auto w-full h-12 text-sm font-semibold text-white bg-blue-04 rounded-xl"
-                >Submit</button>
+                <button class="main-button mt-8 max-w-[342px] h-12 text-sm">Submit</button>
             </form>
             <div class="mt-8 mb-6 max-w-[342px] flex flex-col mx-auto justify-center items-center">
                 <p class="text-center text-gray-09 text-xs leading-[18px] font-semibold mb-1">If you have inquiries,
@@ -197,4 +207,56 @@ export default {
             </div>
         </footer>
     </main>
+    <Teleport to="body">
+        <aside v-if="openModal === 'success'" class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center">
+            <div
+              class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+            >
+                <BigCheck class="mx-auto mt-6 text-green-02" />
+                <h1 class="mt-6 text-base font-bold text-center text-gray-10">Successfully Claimed!</h1>
+                <div class="flex flex-col mt-6">
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
+                        685385484</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date & Time:
+                        08/01/24, 16:01</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                        Baguio</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                        Pre-Assorted
+                        Box of 4</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                        Pls give this item to the customer</span>
+                </div>
+                <button
+                  @click="() => openModal = ''"
+                  class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-green-02"
+                >Back to Main</button>
+            </div>
+        </aside>
+        <aside v-if="openModal === 'fail'" class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center">
+            <div
+              class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+            >
+                <Error class="mx-auto mt-6" />
+                <h1 class="mt-6 text-base font-bold text-center text-gray-10">FAILED!</h1>
+                <div class="flex flex-col mt-6">
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
+                        685385484</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date & Time:
+                        08/01/24, 16:01</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                        Baguio</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                        Pre-Assorted
+                        Box of 4</span>
+                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                        Pls give this item to the customer</span>
+                </div>
+                <button
+                  @click="() => openModal = ''"
+                  class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-error"
+                >Back to Main</button>
+            </div>
+        </aside>
+    </Teleport>
 </template>

@@ -16,6 +16,10 @@ body {
 }
 
 @layer components {
+    .main-button {
+        @apply block mx-auto w-full text-white bg-blue-04 rounded-xl font-semibold text-center
+    }
+
     .sms-auth__header,
     .sms-auth__footer,
     .sms-auth__wrapper {
