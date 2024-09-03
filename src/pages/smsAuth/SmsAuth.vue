@@ -149,7 +149,7 @@ export default {
                 </div>
                 <aside
                   v-if="!isAuthorize"
-                  class="px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01"
+                  class="max-w-[342px] mx-auto px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01"
                 >
                     <div class="inline-flex gap-2 text-gray-10 font-semibold text-xs leading-[18px] mb-2">
                         <SmallCheck />
