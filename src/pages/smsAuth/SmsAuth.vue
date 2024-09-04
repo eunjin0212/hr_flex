@@ -26,16 +26,26 @@ export default {
             passcode: Array(6).fill(""),
             openKeypad: false,
             isSubmit: false,
-            focusIndex: 0,
             isAuthorize: false,
             openModal: ''
         }
     },
     methods: {
+        onClickOutside(event) {
+            if (this.$refs.keypad && !this.$refs.keypad.contains(event.target)) {
+                this.openKeypad = false
+            }
+        },
         onKeypress(event) { // 숫자만
+            if (event.key === 'Delete' || event.key === 'Backspace') {
+                this.onClick('back');
+                return;
+            }
+
             if (event.key.match(/[0-9]/)) {
                 return;
             }
+
             event.preventDefault();
         },
         onInput(event, idx) {
@@ -64,9 +74,8 @@ export default {
             this.openModal = 'success'
             // window.location.href = '/claimed'
         },
-        onFocus(idx) {
+        onFocus() {
             this.openKeypad = true
-            this.focusIndex = idx
             this.isSubmit = false
         },
         onClick(value) {
@@ -83,6 +92,12 @@ export default {
                 const deleteIndex = lastIndex - 1;
                 if (deleteIndex >= 0) {
                     this.passcode[deleteIndex] = '';
+                    this.$nextTick(() => {
+                        const prevInput = this.$refs[`input-${deleteIndex}`][0];
+                        if (prevInput) {
+                            prevInput.focus(); // 삭제된 위치로 포커스 이동
+                        }
+                    });
                 }
                 return;
             }
@@ -97,11 +112,22 @@ export default {
         validation() {
             return !this.isSubmit || this.passcode.filter((code) => code !== '').length === 6
         }
+    },
+    mounted() {
+        window.addEventListener('click', this.onClickOutside);
+        window.addEventListener('keydown', this.onKeypress);
+    },
+    beforeUnmount() {
+        window.removeEventListener('click', this.onClickOutside);
+        window.removeEventListener('keydown', this.onKeypress);
     }
 }
 </script>
 <template>
-    <main class="w-full sms-auth__page bg-gray-04">
+    <main
+      class="w-full h-screen sms-auth__page bg-gray-04"
+      @click="onClickOutside"
+    >
         <header
           class="sms-auth__header w-full h-14 py-[14px] px-4 flex items-center justify-center relative border-b border-gray-05 bg-white"
         >
@@ -112,26 +138,25 @@ export default {
                 <TopLogo />
             </span>
         </header>
-        <section
-          class="px-6 pt-8 bg-white sms-auth__wrapper"
-          :class="openKeypad ? 'h-[calc(100vh-56px-340px)]' : 'h-[calc(100vh-56px)]'"
-        >
-            <h1 class="text-3xl leading-[38px] font-bold text-blue-05 w-[342px] mx-auto sm:text-center">Enter the
+        <section class="relative h-full px-6 pt-8 bg-white sms-auth__wrapper">
+            <!-- :class="openKeypad ? 'h-[calc(100vh-56px-340px)]' : ''" -->
+            <h1 class="text-3xl leading-[38px] font-bold text-blue-05 max-w-[342px] mx-auto">Enter the
                 passcode</h1>
-            <p class="text-gray-09 text-[13px] font-medium leading-5 mt-6 max-w-[342px] mx-auto sm:text-center">
+            <p class="text-gray-09 text-[13px] font-medium leading-5 mt-6 max-w-[342px] mx-auto">
                 We have sent you an SMS or/and Email with a
                 Password. Enter the authentication Password below
             </p>
             <form @submit="onSubmit">
                 <div class="flex items-center justify-center gap-2 my-8">
                     <label
+                      @click.stop="onFocus"
                       v-for="(_, idx) in passcode"
                       :key="idx"
                       class="relative block w-full h-12 rounded-lg max-w-12 before:rounded-lg before:w-full before:h-full before:absolute before:top-0 before:left-0 before:border before:border-blue-03"
                       :class="{
-            'before:border-blue-06 before:border-2': passcode[idx] !== '',
-            'before:!border-error before:border-2': !validation
-        }"
+        'before:border-blue-06 before:border-2': passcode[idx] !== '',
+        'before:!border-error before:border-2': !validation
+    }"
                     >
                         <input
                           type="text"
@@ -142,14 +167,14 @@ export default {
                           :ref="`input-${idx}`"
                           @keypress="onKeypress"
                           @input="(e) => onInput(e, idx)"
-                          @focus="() => onFocus(idx)"
+                          @focus="onFocus"
                           class="w-full h-full text-center text-xl leading-[30px] font-semibold text-navy-01 border-0 rounded-lg shadow-none ring-0 bg-blue-02 focus:ring-0 focus:border-0 focus:outline-0 focus:shadow-none"
                         />
                     </label>
                 </div>
                 <aside
                   v-if="!isAuthorize"
-                  class="max-w-[342px] mx-auto px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01"
+                  class="max-w-[342px] w-full mx-auto px-5 py-[14px] border border-gray-05 rounded-xl bg-gray-01"
                 >
                     <div class="inline-flex gap-2 text-gray-10 font-semibold text-xs leading-[18px] mb-2">
                         <SmallCheck />
@@ -160,7 +185,10 @@ export default {
                         Please ask for assistance to claim the treats.
                     </p>
                 </aside>
-                <button class="main-button mt-8 max-w-[342px] h-12 text-sm">Submit</button>
+                <button
+                  type="submit"
+                  class="main-button mt-8 max-w-[342px] h-12 text-sm"
+                >Submit</button>
             </form>
             <div class="mt-8 mb-6 max-w-[342px] flex flex-col mx-auto justify-center items-center">
                 <p class="text-center text-gray-09 text-xs leading-[18px] font-semibold mb-1">If you have inquiries,
@@ -178,85 +206,94 @@ export default {
                 </a>
             </div>
             <SmallLogo class="mx-auto" />
+            <footer
+              v-if="openKeypad"
+              ref="keypad"
+              class="p-6 h-[340px] z-10 absolute bottom-0 left-0 w-full sms-auth__footer grid grid-cols-3 justify-items-center items-center bg-blue-04 text-white text-3xl leading-[38px] font-semibold"
+            >
+                <div
+                  v-for="number in 9"
+                  :key="number"
+                  class="cursor-pointer"
+                  @click="() => onClick(number)"
+                >{{ number }}</div>
+                <div
+                  class="cursor-pointer"
+                  @click="() => onClick('reset')"
+                >
+                    <Reset />
+                </div>
+                <div
+                  class="cursor-pointer"
+                  @click="() => onClick(0)"
+                >0</div>
+                <div
+                  class="cursor-pointer"
+                  @click="() => onClick('back')"
+                >
+                    <Delete />
+                </div>
+            </footer>
         </section>
-        <footer
-          v-if="openKeypad"
-          class="p-6 h-[340px] z-10 absolute left-0 bottom-0 w-full sms-auth__footer grid grid-cols-3 justify-items-center items-center bg-blue-04 text-white text-3xl leading-[38px] font-semibold"
-        >
-            <div
-              v-for="number in 9"
-              :key="number"
-              class="cursor-pointer"
-              @click="() => onClick(number)"
-            >{{ number }}</div>
-            <div
-              class="cursor-pointer"
-              @click="() => onClick('reset')"
+        <Teleport to="body">
+            <aside
+              v-if="openModal === 'success'"
+              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center"
             >
-                <Reset />
-            </div>
-            <div
-              class="cursor-pointer"
-              @click="() => onClick(0)"
-            >0</div>
-            <div
-              class="cursor-pointer"
-              @click="() => onClick('back')"
+                <div
+                  class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+                >
+                    <BigCheck class="mx-auto mt-6 text-green-02" />
+                    <h1 class="mt-6 text-base font-bold text-center text-gray-10">Successfully Claimed!</h1>
+                    <div class="flex flex-col mt-6">
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
+                            685385484</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date &
+                            Time:
+                            08/01/24, 16:01</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                            Baguio</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                            Pre-Assorted
+                            Box of 4</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                            Pls give this item to the customer</span>
+                    </div>
+                    <button
+                      @click="() => openModal = ''"
+                      class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-green-02"
+                    >Back to Main</button>
+                </div>
+            </aside>
+            <aside
+              v-if="openModal === 'fail'"
+              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center"
             >
-                <Delete />
-            </div>
-        </footer>
+                <div
+                  class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+                >
+                    <Error class="mx-auto mt-6" />
+                    <h1 class="mt-6 text-base font-bold text-center text-gray-10">FAILED!</h1>
+                    <div class="flex flex-col mt-6">
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
+                            685385484</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date &
+                            Time:
+                            08/01/24, 16:01</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                            Baguio</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                            Pre-Assorted
+                            Box of 4</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                            Pls give this item to the customer</span>
+                    </div>
+                    <button
+                      @click="() => openModal = ''"
+                      class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-error"
+                    >Back to Main</button>
+                </div>
+            </aside>
+        </Teleport>
     </main>
-    <Teleport to="body">
-        <aside v-if="openModal === 'success'" class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center">
-            <div
-              class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
-            >
-                <BigCheck class="mx-auto mt-6 text-green-02" />
-                <h1 class="mt-6 text-base font-bold text-center text-gray-10">Successfully Claimed!</h1>
-                <div class="flex flex-col mt-6">
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
-                        685385484</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date & Time:
-                        08/01/24, 16:01</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
-                        Baguio</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
-                        Pre-Assorted
-                        Box of 4</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
-                        Pls give this item to the customer</span>
-                </div>
-                <button
-                  @click="() => openModal = ''"
-                  class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-green-02"
-                >Back to Main</button>
-            </div>
-        </aside>
-        <aside v-if="openModal === 'fail'" class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center">
-            <div
-              class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
-            >
-                <Error class="mx-auto mt-6" />
-                <h1 class="mt-6 text-base font-bold text-center text-gray-10">FAILED!</h1>
-                <div class="flex flex-col mt-6">
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
-                        685385484</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date & Time:
-                        08/01/24, 16:01</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
-                        Baguio</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
-                        Pre-Assorted
-                        Box of 4</span>
-                    <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
-                        Pls give this item to the customer</span>
-                </div>
-                <button
-                  @click="() => openModal = ''"
-                  class="mt-12 main-button max-w-[342px] h-12 text-sm leading-[48px] bg-error"
-                >Back to Main</button>
-            </div>
-        </aside>
-    </Teleport>
 </template>
