@@ -138,8 +138,7 @@ export default {
                 <TopLogo />
             </span>
         </header>
-        <section class="relative h-full px-6 pt-8 bg-white sms-auth__wrapper">
-            <!-- :class="openKeypad ? 'h-[calc(100vh-56px-340px)]' : ''" -->
+        <section class="relative px-6 pt-8 bg-white h-[calc(100%-56px)] sms-auth__wrapper">
             <h1 class="text-3xl leading-[38px] font-bold text-blue-05 max-w-[342px] mx-auto">Enter the
                 passcode</h1>
             <p class="text-gray-09 text-[13px] font-medium leading-5 mt-6 max-w-[342px] mx-auto">
@@ -147,7 +146,7 @@ export default {
                 Password. Enter the authentication Password below
             </p>
             <form @submit="onSubmit">
-                <div class="flex items-center justify-center gap-2 my-8">
+                <div class="flex items-center justify-center my-8 gap-2">
                     <label
                       @click.stop="onFocus"
                       v-for="(_, idx) in passcode"

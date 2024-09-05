@@ -9,6 +9,7 @@ html {
     scroll-behavior: smooth;
     font-family: 'inter';
     font-size: 16px;
+    line-height: unset;
 }
 
 body {
@@ -26,8 +27,77 @@ body {
         @apply max-w-screen-sm mx-auto min-w-xs
     }
 
-    .sms-auth__header .home-logo, 
+    .sms-auth__header .home-logo,
     .sms-auth__header .back-icon {
         @apply cursor-pointer
+    }
+
+    .coupon__wrapper {
+        @apply px-4
+    }
+
+    .coupon__wrapper {
+        /* @apply max-w-[1785px] */
+        @apply max-w-[calc(418px+48px)]
+    }
+
+    .coupon__component {
+        @apply p-2
+        /* border 대신 padding */
+        rounded-3xl flex flex-col shadow-[0px_2px_12px_0px_#00000014]
+    }
+
+    .coupon__component--content {
+        @apply h-full bg-white rounded-2xl p-6
+    }
+
+    .coupon__component .coupon__component--content>img {
+        @apply max-w-[256px] max-h-[256px] w-full h-full mx-auto flex flex-col
+    }
+
+    .coupon__component--without-title .coupon__component--content {
+        @apply rounded-2xl
+    }
+
+    .coupon__component--with-title .title {
+        @apply flex flex-col text-white text-center items-center justify-center pb-[17px] pt-[9px]
+    }
+
+    .coupon__component--with-title .title span {
+        @apply text-xs leading-[18px] font-medium opacity-60
+    }
+
+    .coupon__component--with-title .title h3 {
+        @apply text-sm font-bold
+    }
+
+    .coupon-info {
+        @apply flex flex-col justify-center items-center gap-1 py-[10px] mt-4
+    }
+
+    .coupon-info span:first-of-type {
+        @apply text-sm font-bold text-gray-06
+    }
+
+    .coupon-info span:last-of-type {
+        @apply text-sm font-medium text-gray-10
+    }
+
+    .coupon__component--barcode {
+        @apply mt-2 py-6 px-7
+    }
+    .coupon__component--barcode > img { /* barcode */
+        @apply !max-w-full
+    }
+
+    .coupon__wrapper .share-treats-logo {
+        @apply mt-8 mb-6 mx-auto py-3 flex justify-center
+    }
+    .coupon__wrapper .coupon__component--with-title + .share-treats-logo {
+        @apply mt-4
+    }
+
+    .chip-wrapper {
+        @apply h-12 relative flex items-center justify-between gap-2 p-1 overflow-hidden bg-white rounded-[999px] 
     }
 }

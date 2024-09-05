@@ -1,6 +1,6 @@
-
-
 module.exports = {
+    mode: 'jit',
+    purge: ['./src/**/*.{vue,js,ts,jsx,tsx,html}'],
     content: [
         "/index.html",
         "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -76,6 +76,7 @@ module.exports = {
             },
             minWidth: {
                 'xs': '280px', // min mobile
+                'md': '1024px', // tablet
             }
         },
     },
