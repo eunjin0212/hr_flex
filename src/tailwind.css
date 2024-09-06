@@ -87,7 +87,7 @@ body {
         @apply mt-2 py-6 px-7
     }
     .coupon__component--barcode > img { /* barcode */
-        @apply !max-w-full
+        @apply max-w-full
     }
 
     .coupon__wrapper .share-treats-logo {
