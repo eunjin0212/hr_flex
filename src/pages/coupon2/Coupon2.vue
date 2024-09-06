@@ -1,23 +1,17 @@
 <script>
-import HRnFlexLogo from '@/assets/icons/HRnFlexLogo.vue';
 import RightArrow from '@/assets/icons/RightArrow.vue';
 import TopLogo from '@/assets/icons/TopLogo.vue';
 import Gift from '@/assets/icons/Gift.vue';
 import UpArrow from '@/assets/icons/UpArrow.vue';
 import Search from '@/assets/icons/Search.vue';
-import SwipeArrow from '@/assets/icons/SwipeArrow.vue';
-
-const INITIAL_SWIPE_POSITION = 8
 
 export default {
     components: {
-        HRnFlexLogo,
         RightArrow,
         TopLogo,
         Gift,
         UpArrow,
         Search,
-        SwipeArrow,
     },
     data() {
         return {
@@ -84,11 +78,6 @@ export default {
             ],
             openAddress: {},
             hover: {},
-            togglePosition: INITIAL_SWIPE_POSITION, // 초기 위치
-            isDragging: false,
-            startPosition: INITIAL_SWIPE_POSITION,
-            maxPosition: 0, // 슬라이드 범위
-            threshold: 200,
         }
     },
     methods: {
@@ -117,62 +106,6 @@ export default {
         onAccordionClick() {
             this.openRedeem = !this.openRedeem;
         },
-        updateMaxPosition() {
-            const parentWidth = this.$refs.parentContainer.offsetWidth; // 부모 컨테이너 너비
-            const toggleWidth = !this.$refs.toggleRef ? 0 : this.$refs.toggleRef.offsetWidth; // 토글 버튼 너비
-            this.maxPosition = parentWidth - toggleWidth - INITIAL_SWIPE_POSITION; // 최대 위치 계산
-            this.threshold = this.maxPosition * 0.7; // 임계값을 최대 위치의 70%로 설정 (필요에 따라 조정)
-        },
-        onEvent(start = true, passive = [false, true]) {
-            if (start) {
-                window.addEventListener('mousemove', this.onDragging);
-                window.addEventListener('mouseup', this.stopDragging);
-                window.addEventListener('touchmove', this.onDragging, { passive: passive[0] });
-                window.addEventListener('touchend', this.stopDragging, { passive: passive[1] });
-                return
-            }
-
-            window.removeEventListener('mousemove', this.onDragging);
-            window.removeEventListener('mouseup', this.stopDragging);
-            window.removeEventListener('touchmove', this.onDragging, { passive: passive[0] });
-            window.removeEventListener('touchend', this.stopDragging, { passive: passive[1] });
-        },
-        startDragging(event) {
-            if (this.togglePosition === this.maxPosition) {
-                return;
-            }
-
-            this.isDragging = true;
-            const clientX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
-            this.startPosition = clientX - this.togglePosition;
-            // 마우스 움직임과 멈춤을 감지하기 위해 전역 이벤트 추가
-            this.onEvent()
-        },
-        stopDragging() {
-            this.isDragging = false;
-
-            // 드래그 종료 시 이벤트 제거
-            this.onEvent(false, [true, true])
-
-            // 60% 이상에서 멈추면 토글 상태를 변경하고 위치 고정
-            this.threshold = this.maxPosition * 0.6;
-
-            if (this.togglePosition >= this.threshold) {
-                this.togglePosition = this.maxPosition; // 끝까지 이동
-            } else {
-                this.togglePosition = INITIAL_SWIPE_POSITION; // 처음으로 이동
-            }
-
-        },
-        onDragging(event) {
-            if (this.isDragging) {
-                const clientX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
-                let newPosition = clientX - this.startPosition;
-                if (newPosition < INITIAL_SWIPE_POSITION) newPosition = INITIAL_SWIPE_POSITION; // 최소값
-                if (newPosition > this.maxPosition) newPosition = this.maxPosition; // 최대값
-                this.togglePosition = newPosition;
-            }
-        },
     },
     mounted() {
         this.searchData.forEach((item) => {
@@ -182,13 +115,6 @@ export default {
                 this.hover[item.id][idx] = false
             })
         })
-
-        this.updateMaxPosition();
-        window.addEventListener('resize', this.updateMaxPosition); // 화면 크기 변경에 따라 maxPosition 업데이트
-    },
-    beforeUnmount() {
-        window.removeEventListener('resize', this.updateMaxPosition);
-        this.onEvent(false, [true, true])
     },
     computed: {
         contentHeight() {
@@ -201,7 +127,7 @@ export default {
 }
 </script>
 <template>
-    <main class="relative w-full h-auto min-h-screen pb-[calc(112px+32px)] bg-white coupon__page">
+    <main class="relative w-full h-auto min-h-screen pb-[calc(104px+32px)] bg-white coupon__page">
         <header
           class="coupon__header w-full h-14 py-[14px] px-4 flex items-center justify-center relative border-b border-gray-05 bg-white"
         >
@@ -209,31 +135,21 @@ export default {
                 <RightArrow />
             </span>
             <span class="home-logo">
-                <HRnFlexLogo />
+                <TopLogo />
             </span>
         </header>
-        <section class="h-[calc(100%-56px)] px-6 pt-8 mx-auto bg-white coupon__wrapper">
+        <section class="h-[calc(100%-56px)] px-4 pt-8 mx-auto bg-white coupon__wrapper">
             <div
-              class="coupon__component coupon__component--with-title"
+              class="coupon__component coupon__component--without-title"
               :style="{ backgroundColor: color }"
             >
-                <div
-                  class="title"
-                  :style="{ backgroundColor: color }"
-                >
-                    <span>Company</span>
-                    <h3>HRnFLEX</h3>
-                </div>
                 <div class="coupon__component--content">
-                    <img src="/images/coupon_1.png" />
+                    <img src="/images/coupon_2.png" />
                     <p class="coupon-info">
-                        <span>DUNKIN</span>
-                        <span>Assorted Munchkins Bucket 40pcs</span>
+                        <span>GrabGifts</span>
+                        <span>P100 Gift Code</span>
                     </p>
                 </div>
-                <!-- <div class="coupon__component--content coupon__component--barcode">
-                    <img src="/images/barcode.png" />
-                </div> -->
             </div>
             <div class="share-treats-logo">
                 <TopLogo />
@@ -369,27 +285,14 @@ export default {
         <footer
           class="fixed bottom-0 px-4 left-0 z-10 bg-white coupon__footer w-full shadow-[0px_0px_12px_0px_#0000001F] py-6"
         >
-            <div class="w-full max-w-[418px] mx-auto h-16">
-                <div
-                  class="relative w-full h-full p-2 rounded-full"
+            <div class="w-full max-w-[434px] mx-auto h-14">
+                <button
+                  class="relative w-full h-full p-2 text-sm font-semibold text-white rounded-xl"
                   :style="{ backgroundColor: color }"
                   ref="parentContainer"
                 >
-                    <span
-                      :style="{ left: `${togglePosition}px` }"
-                      ref="toggleRef"
-                      class="absolute flex items-center justify-center px-5 py-3 transition-all duration-300 ease-in-out bg-white rounded-full cursor-pointer w-fit"
-                      @mousedown="startDragging"
-                      @touchstart="startDragging"
-                    >
-                        <SwipeArrow :style="{ color: color }" />
-                    </span>
-                    <p class="flex flex-col items-center py-[3px] select-none">
-                        <span class="text-base font-semibold text-white">Swipe to Claim</span>
-                        <span class="text-xs leading-[18px] text-white opacity-60 font-medium">For store personnel
-                            use</span>
-                    </p>
-                </div>
+                    Add to My Rewards
+                </button>
             </div>
         </footer>
     </main>
