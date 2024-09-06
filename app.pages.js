@@ -23,4 +23,8 @@ module.exports = {
         title: 'Coupon',
         path: '/coupon2'
     },
+    'couponWithBarcode': {
+        title: 'CouponWithBarcode',
+        path: '/couponWithBarcode'
+    },
 }
