@@ -133,12 +133,12 @@ export default {
         <header
           class="coupon__header w-full h-14 py-[14px] px-4 flex items-center justify-center relative border-b border-gray-05 bg-white"
         >
-            <span class="absolute w-6 h-6 back-icon top-4 left-4 ">
+            <button class="absolute w-6 h-6 back-icon top-4 left-4">
                 <RightArrow />
-            </span>
-            <span class="home-logo">
+            </button>
+            <a class="home-logo">
                 <HRnFlexLogo />
-            </span>
+            </a>
         </header>
         <section class="h-[calc(100%-56px)] px-4 pt-8 mx-auto bg-white coupon__wrapper">
             <div

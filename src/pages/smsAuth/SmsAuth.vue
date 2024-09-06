@@ -131,12 +131,12 @@ export default {
         <header
           class="sms-auth__header w-full h-14 py-[14px] px-4 flex items-center justify-center relative border-b border-gray-05 bg-white"
         >
-            <span class="absolute w-6 h-6 back-icon top-4 left-4 ">
+            <button class="absolute w-6 h-6 back-icon top-4 left-4">
                 <RightArrow />
-            </span>
-            <span class="home-logo">
+            </button>
+            <a class="home-logo">
                 <TopLogo />
-            </span>
+            </a>
         </header>
         <section class="relative px-6 pt-8 bg-white h-[calc(100%-56px)] sms-auth__wrapper">
             <h1 class="text-3xl leading-[38px] font-bold text-blue-05 max-w-[342px] mx-auto">Enter the

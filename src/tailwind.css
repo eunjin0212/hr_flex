@@ -27,8 +27,8 @@ body {
         @apply max-w-screen-sm mx-auto min-w-xs
     }
 
-    .sms-auth__header .home-logo,
-    .sms-auth__header .back-icon {
+    .home-logo,
+    .back-icon {
         @apply cursor-pointer
     }
 
