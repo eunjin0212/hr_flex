@@ -82,7 +82,11 @@ export default {
             ],
             openAddress: {},
             hover: {},
-            isToggled: false,
+            togglePosition: 8, // 초기 위치
+            isDragging: false,
+            startPosition: 8,
+            maxPosition: 8, // 최대 슬라이드 범위 (필요에 따라 조정)
+            threshold: 200,
         }
     },
     methods: {
@@ -105,10 +109,46 @@ export default {
                 height: this.openAddress[id] ? `${this.$refs.accordionContent[id].scrollHeight}px` : '0px',
                 opacity: this.openAddress[id] ? 1 : 0,
             };
+        }, 
+        updateMaxPosition() {
+            const parentWidth = this.$refs.parentContainer.offsetWidth; // 부모 컨테이너 너비
+            const toggleWidth = !this.$refs.toggleRef ? 0 : this.$refs.toggleRef.offsetWidth; // 토글 버튼 너비
+            this.maxPosition = parentWidth - toggleWidth - 8; // 최대 위치 계산
+            this.threshold = this.maxPosition * 0.7; // 임계값을 최대 위치의 70%로 설정 (필요에 따라 조정)
         },
-        getToggleChipWith() {
-            if (!this.$refs.toggleRef) return '0px';
-            return this.$refs.toggleRef.offsetWidth;
+        startDragging(event) {
+            if (this.togglePosition === this.maxPosition) {
+                return;
+            }
+            this.isDragging = true;
+
+            this.startPosition = event.clientX - this.togglePosition;
+            // 마우스 움직임과 멈춤을 감지하기 위해 전역 이벤트 추가
+            window.addEventListener('mousemove', this.onDragging);
+            window.addEventListener('mouseup', this.stopDragging);
+        },
+        stopDragging() {
+            this.isDragging = false;
+
+            // 드래그 종료 시 이벤트 제거
+            window.removeEventListener('mousemove', this.onDragging);
+            window.removeEventListener('mouseup', this.stopDragging);
+            
+            this.threshold = this.maxPosition * 0.6;
+            
+            if (this.togglePosition >= this.threshold) {
+                // 특정 지점 이상에서 멈추면 토글 상태를 변경하고 위치 고정
+                this.togglePosition = this.maxPosition; // 끝까지 이동
+            }
+            
+        },
+        onDragging(event) {
+            if (this.isDragging) {
+                let newPosition = event.clientX - this.startPosition;
+                if (newPosition < 8) newPosition = 8; // 최소값
+                if (newPosition > this.maxPosition) newPosition = this.maxPosition; // 최대값
+                this.togglePosition = newPosition;
+            }
         },
     },
     mounted() {
@@ -119,7 +159,15 @@ export default {
                 this.hover[item.id][idx] = false
             })
         })
+
+        this.updateMaxPosition();
+        window.addEventListener('resize', this.updateMaxPosition); // 화면 크기 변경에 따라 maxPosition 업데이트
     },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.updateMaxPosition);
+        window.removeEventListener('mousemove', this.onDragging);
+        window.removeEventListener('mouseup', this.stopDragging);
+    }
 }
 </script>
 <template>
@@ -292,16 +340,17 @@ export default {
                 <div
                   class="relative w-full h-full p-2 rounded-full"
                   :style="{ backgroundColor: color }"
+                  ref="parentContainer"
                 >
                     <span
-                      @click="() => isToggled = !isToggled"
-                      :style="{ left: isToggled ? `calc(100% - ${getToggleChipWith() + 8}px)` : '8px' }"
+                      :style="{ left: `${togglePosition}px` }"
                       ref="toggleRef"
                       class="absolute flex items-center justify-center px-5 py-3 transition-all duration-300 ease-in-out bg-white rounded-full cursor-pointer w-fit"
+                      @mousedown="startDragging"
                     >
                         <SwipeArrow :style="{ color: color }" />
                     </span>
-                    <p class="flex flex-col items-center py-[3px]">
+                    <p class="flex flex-col items-center py-[3px] select-none">
                         <span class="text-base font-semibold text-white">Swipe to Claim</span>
                         <span class="text-xs leading-[18px] text-white opacity-60 font-medium">For store personnel
                             use</span>
