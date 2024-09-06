@@ -1,0 +1,51 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        >
+        <title>Anyone can Share Treats!</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'gray': {
+                                '01': '#FAFAFA',
+                                '05': '#E7E7E7',
+                                '07': '#888888',
+                                '09': '#4F4F4F',
+                                '10': '#3D3D3D',
+                            },
+                            blue: {
+                                '02': '#E0F4FE',
+                                '05': '#0091C9',
+                                '06': '#2EC7FA',
+                            },
+                        }
+                    }
+                }
+            }
+        </script>
+        <!-- Outlook specific styles using conditional comments -->
+        <!--[if mso]>
+            <style>
+                .email-body {
+                    width: 600px; /* Fixed width for Outlook */
+                }
+            </style>
+        <![endif]-->
+    </head>
+
+    <body class="email-body">
+        <header></header>
+        <main></main>
+        <footer>
+            <img src="/images/sharetreats_logo.png" />
+        </footer>
+    </body>
+
+</html>
