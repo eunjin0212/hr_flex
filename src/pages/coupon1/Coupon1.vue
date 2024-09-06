@@ -113,6 +113,7 @@ export default {
                 opacity: this.openAddress[id] ? 1 : 0,
             };
         },
+
         onAccordionClick() {
             this.openRedeem = !this.openRedeem;
         },
@@ -122,35 +123,51 @@ export default {
             this.maxPosition = parentWidth - toggleWidth - INITIAL_SWIPE_POSITION; // 최대 위치 계산
             this.threshold = this.maxPosition * 0.7; // 임계값을 최대 위치의 70%로 설정 (필요에 따라 조정)
         },
+        onEvent(start = true, passive = [false, true]) {
+            if (start) {
+                window.addEventListener('mousemove', this.onDragging);
+                window.addEventListener('mouseup', this.stopDragging);
+                window.addEventListener('touchmove', this.onDragging, { passive: passive[0] });
+                window.addEventListener('touchend', this.stopDragging, { passive: passive[1] });
+                return
+            }
+
+            window.removeEventListener('mousemove', this.onDragging);
+            window.removeEventListener('mouseup', this.stopDragging);
+            window.removeEventListener('touchmove', this.onDragging, { passive: passive[0] });
+            window.removeEventListener('touchend', this.stopDragging, { passive: passive[1] });
+        },
         startDragging(event) {
             if (this.togglePosition === this.maxPosition) {
                 return;
             }
 
             this.isDragging = true;
-            this.startPosition = event.clientX - this.togglePosition;
+            const clientX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
+            this.startPosition = clientX - this.togglePosition;
             // 마우스 움직임과 멈춤을 감지하기 위해 전역 이벤트 추가
-            window.addEventListener('mousemove', this.onDragging);
-            window.addEventListener('mouseup', this.stopDragging);
+            this.onEvent()
         },
         stopDragging() {
             this.isDragging = false;
 
             // 드래그 종료 시 이벤트 제거
-            window.removeEventListener('mousemove', this.onDragging);
-            window.removeEventListener('mouseup', this.stopDragging);
+            this.onEvent(false, [true, true])
 
             // 60% 이상에서 멈추면 토글 상태를 변경하고 위치 고정
             this.threshold = this.maxPosition * 0.6;
 
             if (this.togglePosition >= this.threshold) {
                 this.togglePosition = this.maxPosition; // 끝까지 이동
+            } else {
+                this.togglePosition = INITIAL_SWIPE_POSITION; // 처음으로 이동
             }
 
         },
         onDragging(event) {
             if (this.isDragging) {
-                let newPosition = event.clientX - this.startPosition;
+                const clientX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
+                let newPosition = clientX - this.startPosition;
                 if (newPosition < INITIAL_SWIPE_POSITION) newPosition = INITIAL_SWIPE_POSITION; // 최소값
                 if (newPosition > this.maxPosition) newPosition = this.maxPosition; // 최대값
                 this.togglePosition = newPosition;
@@ -171,8 +188,7 @@ export default {
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.updateMaxPosition);
-        window.removeEventListener('mousemove', this.onDragging);
-        window.removeEventListener('mouseup', this.stopDragging);
+        this.onEvent(false, [true, true])
     },
     computed: {
         contentHeight() {
@@ -364,6 +380,7 @@ export default {
                       ref="toggleRef"
                       class="absolute flex items-center justify-center px-5 py-3 transition-all duration-300 ease-in-out bg-white rounded-full cursor-pointer w-fit"
                       @mousedown="startDragging"
+                      @touchstart="startDragging"
                     >
                         <SwipeArrow :style="{ color: color }" />
                     </span>
