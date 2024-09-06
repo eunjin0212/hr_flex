@@ -7,6 +7,8 @@ import UpArrow from '@/assets/icons/UpArrow.vue';
 import Search from '@/assets/icons/Search.vue';
 import SwipeArrow from '@/assets/icons/SwipeArrow.vue';
 
+const INITIAL_SWIPE_POSITION = 8
+
 export default {
     components: {
         HRnFlexLogo,
@@ -82,17 +84,14 @@ export default {
             ],
             openAddress: {},
             hover: {},
-            togglePosition: 8, // 초기 위치
+            togglePosition: INITIAL_SWIPE_POSITION, // 초기 위치
             isDragging: false,
-            startPosition: 8,
-            maxPosition: 8, // 최대 슬라이드 범위 (필요에 따라 조정)
+            startPosition: INITIAL_SWIPE_POSITION,
+            maxPosition: 0, // 슬라이드 범위
             threshold: 200,
         }
     },
     methods: {
-        onAccordionClick() {
-            this.openRedeem = !this.openRedeem
-        },
         onSearch(event) {
             event.preventDefault();
         },
@@ -104,24 +103,31 @@ export default {
                 this.openAddress[key] = false
             })
         },
-        getAccordionStyle(id) {
+        onClickTab(val) {
+            this.closeAddress()
+            this.activeTab = val;
+        },
+        getAddressAccordionStyle(id, index) {
             return {
-                height: this.openAddress[id] ? `${this.$refs.accordionContent[id].scrollHeight}px` : '0px',
+                height: this.openAddress[id] ? `${this.$refs.addressAccordion?.[index].scrollHeight || 0}px` : '0px',
                 opacity: this.openAddress[id] ? 1 : 0,
             };
-        }, 
+        },
+        onAccordionClick() {
+            this.openRedeem = !this.openRedeem;
+        },
         updateMaxPosition() {
             const parentWidth = this.$refs.parentContainer.offsetWidth; // 부모 컨테이너 너비
             const toggleWidth = !this.$refs.toggleRef ? 0 : this.$refs.toggleRef.offsetWidth; // 토글 버튼 너비
-            this.maxPosition = parentWidth - toggleWidth - 8; // 최대 위치 계산
+            this.maxPosition = parentWidth - toggleWidth - INITIAL_SWIPE_POSITION; // 최대 위치 계산
             this.threshold = this.maxPosition * 0.7; // 임계값을 최대 위치의 70%로 설정 (필요에 따라 조정)
         },
         startDragging(event) {
             if (this.togglePosition === this.maxPosition) {
                 return;
             }
-            this.isDragging = true;
 
+            this.isDragging = true;
             this.startPosition = event.clientX - this.togglePosition;
             // 마우스 움직임과 멈춤을 감지하기 위해 전역 이벤트 추가
             window.addEventListener('mousemove', this.onDragging);
@@ -133,19 +139,19 @@ export default {
             // 드래그 종료 시 이벤트 제거
             window.removeEventListener('mousemove', this.onDragging);
             window.removeEventListener('mouseup', this.stopDragging);
-            
+
+            // 60% 이상에서 멈추면 토글 상태를 변경하고 위치 고정
             this.threshold = this.maxPosition * 0.6;
-            
+
             if (this.togglePosition >= this.threshold) {
-                // 특정 지점 이상에서 멈추면 토글 상태를 변경하고 위치 고정
                 this.togglePosition = this.maxPosition; // 끝까지 이동
             }
-            
+
         },
         onDragging(event) {
             if (this.isDragging) {
                 let newPosition = event.clientX - this.startPosition;
-                if (newPosition < 8) newPosition = 8; // 최소값
+                if (newPosition < INITIAL_SWIPE_POSITION) newPosition = INITIAL_SWIPE_POSITION; // 최소값
                 if (newPosition > this.maxPosition) newPosition = this.maxPosition; // 최대값
                 this.togglePosition = newPosition;
             }
@@ -167,7 +173,15 @@ export default {
         window.removeEventListener('resize', this.updateMaxPosition);
         window.removeEventListener('mousemove', this.onDragging);
         window.removeEventListener('mouseup', this.stopDragging);
-    }
+    },
+    computed: {
+        contentHeight() {
+            if (this.openRedeem && this.$refs.accordion) {
+                return `${this.$refs.accordion.scrollHeight}px`;
+            }
+            return '0px';
+        },
+    },
 }
 </script>
 <template>
@@ -222,16 +236,19 @@ export default {
                     />
                 </div>
                 <ul
+                  ref="accordion"
                   class="bg-gray-05 font-medium text-xs leading-[18px] overflow-hidden text-gray-09 transition-all duration-300"
-                  :class="openRedeem ? 'max-h-[258px] pt-6' : 'max-h-0'"
+                  :style="{ height: contentHeight }"
+                  :class="{ 'mt-6': openRedeem }"
                 >
-                    <li>1. Click the link provided in the SMS or Email, then click the ‘Add to My Rewards’, button to be
-                        redirected to your Grab App.</li>
-                    <li>2. Confirm the Code and Redeem your gift.</li>
-                    <li>3. Choose from GrabTransport, GrabMart, GrabFood, GrabExpress you want to redeem.</li>
-                    <li>4. Once Selected, GrabGifts voucher will be stored in ‘My Rewards’.</li>
-                    <li>5. Once saved to My Rewards, you will not be able to change the service and gift voucher
-                        breakdown you have selected. <br />
+                    <li class="break-words">1. Click the link provided in the SMS or Email, then click the ‘Add to My
+                        Rewards’, button to be
+                        redirected to your Grab App.
+                        2. Confirm the Code and Redeem your gift.
+                        3. Choose from GrabTransport, GrabMart, GrabFood, GrabExpress you want to redeem.
+                        4. Once Selected, GrabGifts voucher will be stored in ‘My Rewards’.
+                        5. Once saved to My Rewards, you will not be able to change the service and gift voucher
+                        breakdown you have selected.
                         Note: Make sure you have the updated version of the Grab App installed.</li>
                 </ul>
             </aside>
@@ -245,14 +262,14 @@ export default {
                     <span
                       class="font-semibold text-xs leading-[18px] flex-1 relative text-center transition-colors duration-300 cursor-pointer"
                       :class="!activeTab ? 'text-white' : 'text-gray-09'"
-                      @click="() => activeTab = false"
+                      @click="() => onClickTab(false)"
                     >
                         Terms and Conditions
                     </span>
                     <span
                       class="font-semibold text-xs leading-[18px] flex-1 relative text-center transition-colors duration-300 cursor-pointer"
                       :class="activeTab ? 'text-white' : 'text-gray-09'"
-                      @click="() => activeTab = true"
+                      @click="() => onClickTab(true)"
                     >
                         Participating Stores
                     </span>
@@ -298,7 +315,7 @@ export default {
                         />
                     </label>
                     <div
-                      v-for="item in searchData"
+                      v-for="(item, idx) in searchData"
                       :key="item.id"
                       @click="() => onAddressClick(item.id)"
                       class="overflow-hidden bg-white border-t border-t-gray-05 first-of-type::border-b-0 last-of-type:rounded-b-3xl"
@@ -312,9 +329,9 @@ export default {
                             />
                         </div>
                         <ul
-                          :style="getAccordionStyle(item.id)"
+                          :style="getAddressAccordionStyle(item.id, idx)"
                           class="overflow-hidden transition-all duration-300"
-                          ref="accordionContent"
+                          ref="addressAccordion"
                         >
                             <li
                               v-for="(address, idx) in item.contents"
