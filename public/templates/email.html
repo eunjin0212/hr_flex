@@ -1,5 +1,4 @@
 <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta
@@ -15,15 +14,17 @@
                         colors: {
                             'gray': {
                                 '01': '#FAFAFA',
+                                '02': '#FAFAFA',
                                 '05': '#E7E7E7',
+                                '06': '#B0B0B0',
                                 '07': '#888888',
                                 '09': '#4F4F4F',
                                 '10': '#3D3D3D',
                             },
                             blue: {
                                 '02': '#E0F4FE',
-                                '05': '#0091C9',
-                                '06': '#2EC7FA',
+                                '05': '#2EC7FA',
+                                '06': '#0091C9',
                             },
                         }
                     }
@@ -41,11 +42,158 @@
     </head>
 
     <body class="email-body">
-        <header></header>
-        <main></main>
-        <footer>
-            <img src="/images/sharetreats_logo.png" />
+        <header class="h-14 bg-blue-02">
+            <div class="mx-auto max-w-[670px] w-full text-blue-06 px-8 py-[14px] flex items-center justify-between">
+                <strong class="text-base font-bold">Anyone can Share Treats!</strong>
+                <img
+                  class="h-7"
+                  src="/images/sharetreats_logo_sm.png"
+                />
+            </div>
+        </header>
+        <main class="mx-auto max-w-[450px] w-full flex flex-col items-center px-4">
+            <img
+              src="/images/hrnflex_logo.png"
+              alt="company_logo"
+              class="my-[29px]"
+            />
+            <section class="w-full max-w-[450px] pt-4">
+                <div class="p-2 rounded-3xl flex flex-col shadow-[0px_2px_12px_0px_#00000014] bgcolor-change-component">
+                    <div
+                      class="flex flex-col text-white text-center items-center justify-center pb-[17px] pt-[9px] text-sm font-bold bgcolor-change-component"
+                    >
+                        <h3 class="text-sm font-bold text-change-component">HRnFLEX</h3>
+                    </div>
+                    <div class="h-full p-6 bg-white rounded-2xl">
+                        <img
+                          alt="coupon"
+                          src="/images/coupon_1.png"
+                          class="max-w-[256px] max-h-[256px] w-full h-full mx-auto flex flex-col"
+                        />
+                        <p class="flex flex-col justify-center items-center gap-1 py-[10px] mt-4">
+                            <span class="text-sm font-bold text-gray-06">DUNKIN</span>
+                            <span class="text-sm font-medium text-gray-10">Assorted Munchkins Bucket 40pcs</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <aside class="w-full p-6 mt-8 border border-gray-05 bg-gray-01 rounded-xl">
+                <div class="grid grid-cols-[66px_2fr] gap-y-2">
+                    <span class="text-sm font-medium text-gray-07">Brand</span>
+                    <span class="text-sm font-medium text-right text-gray-09 text-nowrap">DUNKIN</span>
+                    <span class="text-sm font-medium text-gray-07">Treats</span>
+                    <span
+                      class="text-sm font-medium text-right text-gray-09 text-nowrap">Assorted-Munchkins-Bucket-40pcs</span>
+                    <span class="text-sm font-medium text-gray-07">Code</span>
+                    <span class="text-sm font-medium text-right text-gray-09 text-nowrap">245 687 479</span>
+                    <span class="text-sm font-medium text-gray-07">Valid until</span>
+                    <span class="text-sm font-medium text-right text-gray-09 text-nowrap">05/24/2024</span>
+                </div>
+            </aside>
+            <aside class="w-full px-5 py-4 mx-auto mt-6 border border-gray-05 rounded-xl bg-gray-01">
+                <div class="inline-flex gap-2 text-gray-10 font-semibold text-xs leading-[18px] mb-2">
+                    <img src="/images/check_circle.png" />
+                    Message
+                </div>
+                <p class="font-medium text-xs leading-[18px] text-gray-07">
+                    Happy Christmas everyone!
+                </p>
+            </aside>
+            <button
+              class="w-full my-8 text-base font-semibold text-white rounded-xl h-14 bgcolor-change-component">Check
+                My
+                Treats</button>
+            <aside class="p-5 bg-gray-02 rounded-3xl shadow-[0px_2px_12px_0px_#00000014] border border-gray-05">
+                <p class="inline-flex items-center justify-center w-full gap-3 py-2">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="color-change-component"
+                    >
+                        <mask
+                          id="mask0_1_661"
+                          style="mask-type:alpha"
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="24"
+                          height="24"
+                        >
+                            <rect
+                              width="24"
+                              height="24"
+                              fill="#D9D9D9"
+                            />
+                        </mask>
+                        <g mask="url(#mask0_1_661)">
+                            <path
+                              d="M4 17V19H20V17H4ZM4 6H6.2C6.11667 5.85 6.0625 5.69167 6.0375 5.525C6.0125 5.35833 6 5.18333 6 5C6 4.16667 6.29167 3.45833 6.875 2.875C7.45833 2.29167 8.16667 2 9 2C9.5 2 9.9625 2.12917 10.3875 2.3875C10.8125 2.64583 11.1833 2.96667 11.5 3.35L12 4L12.5 3.35C12.8 2.95 13.1667 2.625 13.6 2.375C14.0333 2.125 14.5 2 15 2C15.8333 2 16.5417 2.29167 17.125 2.875C17.7083 3.45833 18 4.16667 18 5C18 5.18333 17.9875 5.35833 17.9625 5.525C17.9375 5.69167 17.8833 5.85 17.8 6H20C20.55 6 21.0208 6.19583 21.4125 6.5875C21.8042 6.97917 22 7.45 22 8V19C22 19.55 21.8042 20.0208 21.4125 20.4125C21.0208 20.8042 20.55 21 20 21H4C3.45 21 2.97917 20.8042 2.5875 20.4125C2.19583 20.0208 2 19.55 2 19V8C2 7.45 2.19583 6.97917 2.5875 6.5875C2.97917 6.19583 3.45 6 4 6ZM4 14H20V8H14.9L16.4 10.05C16.5667 10.2833 16.6333 10.5292 16.6 10.7875C16.5667 11.0458 16.4333 11.2583 16.2 11.425C15.9667 11.5917 15.7208 11.6542 15.4625 11.6125C15.2042 11.5708 14.9917 11.4417 14.825 11.225L12 7.4L9.175 11.225C9.00833 11.4417 8.79583 11.5708 8.5375 11.6125C8.27917 11.6542 8.03333 11.5917 7.8 11.425C7.56667 11.2583 7.42917 11.0458 7.3875 10.7875C7.34583 10.5292 7.40833 10.2833 7.575 10.05L9.05 8H4V14ZM9 6C9.28333 6 9.52083 5.90417 9.7125 5.7125C9.90417 5.52083 10 5.28333 10 5C10 4.71667 9.90417 4.47917 9.7125 4.2875C9.52083 4.09583 9.28333 4 9 4C8.71667 4 8.47917 4.09583 8.2875 4.2875C8.09583 4.47917 8 4.71667 8 5C8 5.28333 8.09583 5.52083 8.2875 5.7125C8.47917 5.90417 8.71667 6 9 6ZM15 6C15.2833 6 15.5208 5.90417 15.7125 5.7125C15.9042 5.52083 16 5.28333 16 5C16 4.71667 15.9042 4.47917 15.7125 4.2875C15.5208 4.09583 15.2833 4 15 4C14.7167 4 14.4792 4.09583 14.2875 4.2875C14.0958 4.47917 14 4.71667 14 5C14 5.28333 14.0958 5.52083 14.2875 5.7125C14.4792 5.90417 14.7167 6 15 6Z"
+                              fill="currentColor"
+                            />
+                        </g>
+                    </svg>
+                    <strong class="text-sm font-bold text-gray-10">How to Redeem</strong>
+                </p>
+                <div class="break-words font-medium text-xs leading-[18px] text-gray-09 mt-6">
+                    1. Click the link provided in the SMS or Email, then click the ‘Add to My
+                    Rewards’, button to be redirected to your Grab App. <br />
+                    2. Confirm the Code and Redeem your gift.<br />
+                    3. Choose from GrabTransport, GrabMart, GrabFood, GrabExpress you want to redeem.<br />
+                    4. Once Selected, GrabGifts voucher will be stored in ‘My Rewards’.<br />
+                    5. Once saved to My Rewards, you will not be able to change the service and gift voucher
+                    breakdown you have selected.<br />
+                    Note: Make sure you have the updated version of the Grab App installed.
+                </div>
+            </aside>
+            <aside class="mt-8 p-5 bg-gray-02 rounded-3xl shadow-[0px_2px_12px_0px_#00000014] border border-gray-05">
+                <p class="inline-flex items-center justify-center w-full">
+                    <strong class="text-sm font-bold text-gray-10">Terms and Conditions</strong>
+                </p>
+                <div class="break-words font-medium text-xs leading-[18px] text-gray-09 mt-6">
+                    - eVoucher code is valid immediately after receiving it and until the valid period. (Please refer to SMS or Email received)<br/>
+                    - It can be redeemed only in participating Merchant branches.<br/>
+                    - For Voucher Code: One time use and unused amounts will be forfeited.<br/>
+                    - For Voucher Code: eVoucher are only valid for regular priced products. Not applicable for seasonal products.<br/>
+                    - For Voucher Code: Extra charges will apply to items purchased in excess value of the eVoucher. Additional amount shall be paid thru cash basis ONLY.<br/>
+                    - eVoucher are valid for dine in and take out transactions only. Not valid for delivery.<br/>
+                    - Order cannot be cancelled once processed. No refunds and cancellation will be entertained.<br/>
+                    - eVoucher may not be redeemed when the store is offline or out of stock. <br/>
+                    - A maximum limit of three (3) redemptions per transaction, per customer, per store visit, per day.<br/>
+                    - eVoucher is not exchangeable for cash or credit and can’t be used in conjunction with any other promo or discount.<br/>
+                    - The recipient is responsible for the safekeeping of the eVoucher code. This should only be presented to the branch/store crew. Share treats is not liable for any misused codes.<br/>
+                    - The Merchant is responsible for the quality of their products and/or services.<br/>
+                </div>
+            </aside>
+            <button class="w-full my-8 text-base font-semibold text-white rounded-xl h-14 bgcolor-change-component">Find
+                Participating Store</button>
+        </main>
+        <footer class="py-12 mb-16 text-center">
+            <img
+              src="/images/sharetreats_logo.png"
+              class="mx-auto mb-6"
+            />
+            <p class="text-xs leading-[18px] font-medium text-gray-07">©SHARE TREATS. All rights reserved.</p>
+            <p class="text-xs leading-[18px] font-medium text-gray-07">This email was sent from SHARE TREATS.</p>
         </footer>
     </body>
 
+    <script lang="javascript">
+        const color = '#0CB3EB'
+        const bgcolorChangeComponent = document.getElementsByClassName('bgcolor-change-component')
+        if (bgcolorChangeComponent.length) {
+            Array.prototype.forEach.call(bgcolorChangeComponent, (element => {
+                element.style.backgroundColor = color
+            }));
+        }
+
+        const colorChangeComponent = document.getElementsByClassName('color-change-component')
+        if (colorChangeComponent.length) {
+            Array.prototype.forEach.call(colorChangeComponent, (element => {
+                element.style.color = color
+            }));
+        }
+    </script>
 </html>
