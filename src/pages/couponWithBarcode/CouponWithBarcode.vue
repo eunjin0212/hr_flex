@@ -293,7 +293,7 @@ export default {
                               :style="hover[item.id]?.[idx] && `background-color: ${color}30`"
                               @mouseover="() => hover[item.id][idx] = true"
                               @mouseleave="() => hover[item.id][idx] = false"
-                              class="flex flex-col gap-2 px-3 py-4 border-t border-t-gray-05"
+                              class="flex flex-col px-3 py-4 border-t gap-2 border-t-gray-05"
                             >
                                 <span class="font-semibold text-xs leading-[18px] text-gray-10">{{ address.title
                                     }}</span>

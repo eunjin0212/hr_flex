@@ -146,7 +146,7 @@ export default {
                 Password. Enter the authentication Password below
             </p>
             <form @submit="onSubmit">
-                <div class="flex items-center justify-center gap-2 my-8">
+                <div class="flex items-center justify-center my-8 gap-2">
                     <label
                       @click.stop="onFocus"
                       v-for="(_, idx) in passcode"
