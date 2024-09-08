@@ -76,11 +76,11 @@ body {
     }
 
     .coupon-info span:first-of-type {
-        @apply text-sm font-bold text-gray-06 text-center
+        @apply text-sm font-bold text-gray-06 text-wrap text-center
     }
 
     .coupon-info span:last-of-type {
-        @apply text-sm font-medium text-gray-10 text-center
+        @apply text-sm font-medium text-gray-10 text-wrap text-center
     }
 
     .coupon__component--barcode {
