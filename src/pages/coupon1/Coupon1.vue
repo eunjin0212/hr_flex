@@ -333,10 +333,12 @@ export default {
                     <div
                       v-for="(item, idx) in searchData"
                       :key="item.id"
-                      @click="() => onAddressClick(item.id)"
                       class="overflow-hidden bg-white border-t border-t-gray-05 first-of-type::border-b-0 last-of-type:rounded-b-3xl"
                     >
-                        <div class="flex items-center justify-between px-3 py-2 cursor-pointer bg-gray-03">
+                        <div
+                          class="flex items-center justify-between px-3 py-2 cursor-pointer bg-gray-03 text-wrap"
+                          @click="() => onAddressClick(item.id)"
+                        >
                             {{ item.title }}
                             <UpArrow
                               :style="{ color: color }"
@@ -355,10 +357,11 @@ export default {
                               :style="hover[item.id]?.[idx] && `background-color: ${color}30`"
                               @mouseover="() => hover[item.id][idx] = true"
                               @mouseleave="() => hover[item.id][idx] = false"
-                              class="flex flex-col px-3 py-4 border-t gap-2 border-t-gray-05"
+                              class="flex flex-col gap-2 px-3 py-4 border-t border-t-gray-05"
                             >
-                                <span class="font-semibold text-xs leading-[18px] text-gray-10">{{ address.title
-                                    }}</span>
+                                <span class="font-semibold text-xs leading-[18px] text-gray-10 text-wrap">{{
+                address.title
+            }}</span>
                                 <span class="font-medium text-xs leading-[18px] text-gray-07">{{ address.text }}</span>
                             </li>
                         </ul>
@@ -378,7 +381,7 @@ export default {
                     <span
                       :style="{ left: `${togglePosition}px` }"
                       ref="toggleRef"
-                      class="absolute flex items-center justify-center px-5 py-3 bg-white rounded-full cursor-pointer transition-all duration-300 ease-in-out w-fit"
+                      class="absolute flex items-center justify-center px-5 py-3 transition-all duration-300 ease-in-out bg-white rounded-full cursor-pointer w-fit"
                       @mousedown="startDragging"
                       @touchstart="startDragging"
                     >
