@@ -31,13 +31,13 @@ export default {
                 <h6 class="mb-2 text-sm font-bold text-gray-10">Detail</h6>
                 <div class="grid grid-cols-2 gap-y-2">
                     <span class="text-sm font-medium text-gray-07">Code:</span>
-                    <span class="text-sm font-medium text-right text-gray-09 line-clamp-3">정말 긴 글자가 들어갑니다 정말 긴 글자 글자 글자</span>
+                    <span class="text-sm font-medium text-right break-all text-gray-09 line-clamp-3">=3YPFH=LD5LB==M<6UB=JOGHV==YGWKT=MDBOX=</span>
                     <span class="text-sm font-medium text-gray-07">Date & Time:</span>
-                    <span class="text-sm font-medium text-right text-gray-09 line-clamp-3">08/01/24, 16:01</span>
+                    <span class="text-sm font-medium text-right break-all text-gray-09 line-clamp-3">08/01/24, 16:01</span>
                     <span class="text-sm font-medium text-gray-07">Store:</span>
-                    <span class="text-sm font-medium text-right text-gray-09 line-clamp-3">Sm Baguio</span>
+                    <span class="text-sm font-medium text-right break-all text-gray-09 line-clamp-3">Sm Baguio</span>
                     <span class="text-sm font-medium text-gray-07">Item:</span>
-                    <span class="text-sm font-medium text-right text-gray-09 line-clamp-3">Pre-Assorted Box of 4</span>
+                    <span class="text-sm font-medium text-right break-all text-gray-09 line-clamp-3">Pre-Assorted Box of 4</span>
                 </div>
             </div>
             <a href="/smsAuth" class="main-button mt-8 h-12 text-sm leading-[48px]">Back to Main</a>
