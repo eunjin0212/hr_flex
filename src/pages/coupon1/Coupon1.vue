@@ -23,7 +23,7 @@ export default {
         return {
             color: '#0CB3EB',
             openRedeem: false,
-            activeTab: true,
+            activeTab: false,
             searchData: [
                 {
                     title: 'Abra',
@@ -95,17 +95,56 @@ export default {
         onSearch(event) {
             event.preventDefault();
         },
+        adjustMargin() {
+            const termsElement = this.$refs.termsRef;
+            const participatingElement = this.$refs.participatingRef;
+
+            if (termsElement && participatingElement) {
+                // 숨겨진 요소의 높이를 계산하기 위해 일시적으로 보이게 설정
+                const originalTermsDisplay = termsElement.style.display;
+                const originalParticipatingDisplay = participatingElement.style.display;
+
+                termsElement.style.display = 'block';
+                participatingElement.style.display = 'block';
+
+                // 높이 계산
+                const termsHeight = termsElement.offsetHeight;
+                const participatingHeight = participatingElement.offsetHeight;
+
+                // 높이 차이에 따라 margin 추가
+                if (termsHeight > participatingHeight) {
+                    participatingElement.style.marginBottom = `${termsHeight - participatingHeight}px`;
+                    termsElement.style.marginBottom = `0`; // 기존 margin 제거
+                } else {
+                    termsElement.style.marginBottom = `${participatingHeight - termsHeight}px`;
+                    participatingElement.style.marginBottom = `0`; // 기존 margin 제거
+                }
+
+                // 원래 상태로 복구
+                termsElement.style.display = originalTermsDisplay;
+                participatingElement.style.display = originalParticipatingDisplay;
+            }
+        },
         onAddressClick(id) {
             this.openAddress[id] = !this.openAddress[id];
+            this.$nextTick(() => {
+                this.adjustMargin();
+            });
         },
         closeAddress() {
             Object.keys(this.openAddress).forEach((key) => {
                 this.openAddress[key] = false
             })
+            this.$nextTick(() => {
+                this.adjustMargin();
+            });
         },
         onClickTab(val) {
             this.closeAddress()
             this.activeTab = val;
+            this.$nextTick(() => {
+                this.adjustMargin();
+            });
         },
         getAddressAccordionStyle(id, index) {
             return {
@@ -113,7 +152,6 @@ export default {
                 opacity: this.openAddress[id] ? 1 : 0,
             };
         },
-
         onAccordionClick() {
             this.openRedeem = !this.openRedeem;
         },
@@ -182,6 +220,8 @@ export default {
                 this.hover[item.id][idx] = false
             })
         })
+
+        this.adjustMargin()
 
         this.updateMaxPosition();
         window.addEventListener('resize', this.updateMaxPosition); // 화면 크기 변경에 따라 maxPosition 업데이트
@@ -291,7 +331,8 @@ export default {
                     </span>
                 </div>
                 <ul
-                  v-if="!activeTab"
+                  v-show="!activeTab"
+                  ref="termsRef"
                   class="py-6 px-6 text-xs leading-[18px] font-medium text-gray-09"
                 >
                     <li>- eVoucher code is valid immediately after receiving it and until the valid period. (Please
@@ -315,7 +356,8 @@ export default {
                     <li>- The Merchant is responsible for the quality of their products and/or services.</li>
                 </ul>
                 <form
-                  v-else
+                  v-show="activeTab"
+                  ref="participatingRef"
                   @submit="onSearch"
                   class="pt-6"
                 >
