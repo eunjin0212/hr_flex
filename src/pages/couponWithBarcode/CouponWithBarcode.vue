@@ -20,7 +20,6 @@ export default {
             color: '#0CB3EB',
             openRedeem: false,
             activeTab: false,
-            code: 'Barcode', // FIXME: OR code 디자인을 위한 코드 입니다
             searchData: [
                 {
                     title: 'Abra',
@@ -201,15 +200,10 @@ export default {
                 </div>
                 <div
                   class="coupon__component--content coupon__component--barcode"
-                  @click="() => {
-                code = code === 'Barcode' ? 'QR' : 'Barcode' // FIXME: OR code 디자인을 위한 코드 입니다
-            }"
                 >
-                    <p class="mb-4 text-sm font-medium text-center text-gray-10">{{ code }}</p>
-                    <!-- FIXME: OR code 디자인을 위한 코드 입니다 -->
+                    <p class="mb-4 text-sm font-medium text-center text-gray-10">Barcode</p>
                     <img
-                      :class="{ '!max-w-40': code !== 'Barcode' }"
-                      :src="`/images/${code}.png`"
+                      src="/images/Barcode.png"
                     />
                 </div>
             </div>
