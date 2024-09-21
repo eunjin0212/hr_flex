@@ -146,7 +146,7 @@ export default {
                 Password. Enter the authentication Password below
             </p>
             <form @submit="onSubmit">
-                <div class="flex items-center justify-center my-8 gap-2">
+                <div class="flex items-center justify-center gap-2 my-8">
                     <label
                       @click.stop="onFocus"
                       v-for="(_, idx) in passcode"
@@ -237,7 +237,7 @@ export default {
         <Teleport to="body">
             <aside
               v-if="openModal === 'success'"
-              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center"
+              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center px-6"
             >
                 <div
                   class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
@@ -245,17 +245,17 @@ export default {
                     <BigCheck class="mx-auto mt-6 text-green-02" />
                     <h1 class="mt-6 text-base font-bold text-center text-gray-10">Successfully Claimed!</h1>
                     <div class="flex flex-col mt-6">
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Code:
                             685385484</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date &
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Date &
                             Time:
                             08/01/24, 16:01</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Store: Sm
                             Baguio</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Item:
                             Pre-Assorted
                             Box of 4</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">
                             Pls give this item to the customer</span>
                     </div>
                     <button
@@ -266,25 +266,25 @@ export default {
             </aside>
             <aside
               v-if="openModal === 'fail'"
-              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center"
+              class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center px-6"
             >
                 <div
-                  class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+                  class="min-w-[342px] min-h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
                 >
                     <Error class="mx-auto mt-6" />
                     <h1 class="mt-6 text-base font-bold text-center text-gray-10">FAILED!</h1>
                     <div class="flex flex-col mt-6">
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Code:
-                            685385484</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Date &
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Code:
+                            685385484685385484685385484685385484685385484685385484</span>
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Date &
                             Time:
                             08/01/24, 16:01</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Store: Sm
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Store: Sm
                             Baguio</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">Item:
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Item:
                             Pre-Assorted
                             Box of 4</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 text-nowrap">
+                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">
                             Pls give this item to the customer</span>
                     </div>
                     <button
