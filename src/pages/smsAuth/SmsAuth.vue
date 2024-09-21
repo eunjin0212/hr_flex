@@ -167,6 +167,7 @@ export default {
                           @keypress="onKeypress"
                           @input="(e) => onInput(e, idx)"
                           @focus="onFocus"
+                          readonly
                           class="w-full h-full text-center text-xl leading-[30px] font-semibold text-navy-01 border-0 rounded-lg shadow-none ring-0 bg-blue-02 focus:ring-0 focus:border-0 focus:outline-0 focus:shadow-none"
                         />
                     </label>
