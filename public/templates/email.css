@@ -21,41 +21,15 @@ img {
     vertical-align: middle;
 }
 
-blockquote,
-dd,
-dl,
-figure,
-h1,
-h2,
 h3,
-h4,
-h5,
-h6,
-hr,
-p,
-pre {
+p {
     margin: 0;
 }
 
-[role=button],
-input:where([type=button]),
 button {
     cursor: pointer;
-    font-family: inherit;
-    font-feature-settings: inherit;
-    font-variation-settings: inherit;
-    font-size: 100%;
-    font-weight: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-    color: inherit;
     margin: 0;
     padding: 0;
-    text-transform: none;
-    appearance: button;
-    -webkit-appearance: button;
-    background-color: transparent;
-    background-image: none;
     outline: 0;
     border-width: 0;
 }
@@ -64,18 +38,6 @@ button {
 
 .text-white {
     color: white;
-}
-
-.text-gray-01 {
-    color: #FAFAFA
-}
-
-.text-gray-02 {
-    color: #FAFAFA
-}
-
-.text-gray-05 {
-    color: #E7E7E7
 }
 
 .text-gray-06 {
@@ -92,14 +54,6 @@ button {
 
 .text-gray-10 {
     color: #3D3D3D
-}
-
-.text-blue-02 {
-    color: #E0F4FE
-}
-
-.text-blue-05 {
-    color: #2EC7FA
 }
 
 .text-blue-06 {
@@ -120,39 +74,19 @@ button {
     background-color: #FAFAFA
 }
 
-.bg-gray-05 {
-    background-color: #E7E7E7
-}
-
-.bg-gray-06 {
-    background-color: #B0B0B0
-}
-
-.bg-gray-07 {
-    background-color: #888888
-}
-
-.bg-gray-09 {
-    background-color: #4F4F4F
-}
-
-.bg-gray-10 {
-    background-color: #3D3D3D
-}
-
 .bg-blue-02 {
     background-color: #E0F4FE
 }
 
-.bg-blue-05 {
-    background-color: #2EC7FA
-}
-
-.bg-blue-06 {
-    background-color: #0091C9
-}
-
 /******************** height ********************/
+
+.h-7 {
+    height: 1.75rem /* 28px */;
+}
+
+.h-12 {
+    height: 3rem /* 48px */;
+}
 
 .h-14 {
     height: 3.5rem
@@ -248,6 +182,11 @@ button {
 .px-5 {
     padding-left: 1.25rem /* 20px */;
     padding-right: 1.25rem /* 20px */;
+}
+
+.py-5 {
+    padding-top: 1.25rem /* 20px */;
+    padding-bottom: 1.25rem /* 20px */;
 }
 
 .p-6 {
