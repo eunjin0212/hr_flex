@@ -31,6 +31,9 @@ export default {
         }
     },
     methods: {
+        isMobile() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        },
         onClickOutside(event) {
             if (this.$refs.keypad && !this.$refs.keypad.contains(event.target)) {
                 this.openKeypad = false
@@ -167,7 +170,7 @@ export default {
                           @keypress="onKeypress"
                           @input="(e) => onInput(e, idx)"
                           @focus="onFocus"
-                          readonly
+                          :readonly="isMobile()"
                           class="w-full h-full text-center text-xl leading-[30px] font-semibold text-navy-01 border-0 rounded-lg shadow-none ring-0 bg-blue-02 focus:ring-0 focus:border-0 focus:outline-0 focus:shadow-none"
                         />
                     </label>
@@ -241,22 +244,32 @@ export default {
               class="h-screen bg-[#00000070] fixed top-0 left-0 w-screen flex justify-center items-center px-6"
             >
                 <div
-                  class="min-w-[342px] h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F]"
+                  class="min-w-[342px] min-h-[470px] p-6 border border-gray-05 bg-white rounded-[20px] shadow-[0px_8px_12px_0px_#0000001F] overflow-y-auto"
                 >
                     <BigCheck class="mx-auto mt-6 text-green-02" />
                     <h1 class="mt-6 text-base font-bold text-center text-gray-10">Successfully Claimed!</h1>
                     <div class="flex flex-col mt-6">
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Code:
-                            685385484</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Date &
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Code:
+                        6853854846853854846853854846853854846853854846853854846</span>
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Date &
                             Time:
                             08/01/24, 16:01</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Store: Sm
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Store: Sm
                             Baguio</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Item:
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Item:
                             Pre-Assorted
                             Box of 4</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >
                             Pls give this item to the customer</span>
                     </div>
                     <button
@@ -275,17 +288,27 @@ export default {
                     <Error class="mx-auto mt-6" />
                     <h1 class="mt-6 text-base font-bold text-center text-gray-10">FAILED!</h1>
                     <div class="flex flex-col mt-6">
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Code:
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Code:
                             685385484685385484685385484685385484685385484685385484</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Date &
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Date &
                             Time:
                             08/01/24, 16:01</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Store: Sm
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Store: Sm
                             Baguio</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">Item:
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >Item:
                             Pre-Assorted
                             Box of 4</span>
-                        <span class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words">
+                        <span
+                          class="text-sm leading-[30px] font-medium text-center text-gray-09 whitespace-break-spaces break-words"
+                        >
                             Pls give this item to the customer</span>
                     </div>
                     <button
