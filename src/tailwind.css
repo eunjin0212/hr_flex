@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://webfontworld.github.io/naver/NanumSquareRound.css');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 html {
     scroll-behavior: smooth;
@@ -13,91 +13,17 @@ html {
 }
 
 body {
-    background-color: #f9f9f9;
+    background-color: #FCFCFD;
 }
 
 @layer components {
-    .main-button {
-        @apply block mx-auto w-full text-white bg-blue-04 rounded-xl font-semibold text-center
+    .select {
+        @apply inline-flex cursor-pointer pl-3 pr-14 py-[11px] bg-white border rounded-lg border-gray-05 shadow-[0px_1px_2px_0px_#1018280D] text-sm leading-[26px] appearance-none bg-[url('@/assets/icons/select_arrow.png')] bg-no-repeat bg-[length:14px_7px] bg-[right_16px_center]
     }
-
-    .sms-auth__header,
-    .sms-auth__footer,
-    .sms-auth__wrapper {
-        @apply max-w-screen-sm mx-auto min-w-xs
+    .select-options {
+        @apply absolute bg-white px-3 border border-gray-05 border-t-0
     }
-
-    .home-logo,
-    .back-icon {
-        @apply cursor-pointer
-    }
-
-    .coupon__wrapper {
-        @apply px-4
-    }
-
-    .coupon__wrapper {
-        /* @apply max-w-[1785px] */
-        @apply max-w-[calc(418px+48px)]
-    }
-
-    .coupon__component {
-        @apply p-2
-        /* border 대신 padding */
-        rounded-3xl flex flex-col shadow-[0px_2px_12px_0px_#00000014]
-    }
-
-    .coupon__component--content {
-        @apply h-full bg-white rounded-2xl p-6
-    }
-
-    .coupon__component .coupon__component--content>img {
-        @apply max-w-[256px] max-h-[256px] w-full h-full mx-auto flex flex-col
-    }
-
-    .coupon__component--without-title .coupon__component--content {
-        @apply rounded-2xl
-    }
-
-    .coupon__component--with-title .title {
-        @apply flex flex-col text-white text-center items-center justify-center pb-[17px] pt-[9px]
-    }
-
-    .coupon__component--with-title .title span {
-        @apply text-xs leading-[18px] font-medium opacity-60
-    }
-
-    .coupon__component--with-title .title h3 {
-        @apply text-sm font-bold
-    }
-
-    .coupon-info {
-        @apply flex flex-col justify-center items-center gap-1 py-[10px] mt-4
-    }
-
-    .coupon-info span:first-of-type {
-        @apply text-sm font-bold text-gray-06 text-wrap text-center
-    }
-
-    .coupon-info span:last-of-type {
-        @apply text-sm font-medium text-gray-10 text-wrap text-center
-    }
-
-    .coupon__component--barcode {
-        @apply mt-2 py-6 px-7
-    }
-    .coupon__component--barcode > img { /* barcode */
-        @apply max-w-full
-    }
-
-    .coupon__wrapper .share-treats-logo {
-        @apply mt-8 mb-6 mx-auto py-3 flex justify-center
-    }
-    .coupon__wrapper .coupon__component--with-title + .share-treats-logo {
-        @apply mt-4
-    }
-
-    .chip-wrapper {
-        @apply h-12 relative flex items-center justify-between gap-2 p-1 overflow-hidden bg-white rounded-[999px] 
+    .select-options li {
+        @apply py-[11px] cursor-pointer
     }
 }

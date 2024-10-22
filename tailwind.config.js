@@ -1,6 +1,5 @@
 module.exports = {
     mode: 'jit',
-    purge: ['./src/**/*.{vue,js,ts,jsx,tsx,html}'],
     content: [
         "/index.html",
         "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -23,51 +22,37 @@ module.exports = {
                 '7.5': '1.875rem', // 30px
             },
             colors: {
-                'top-menu-blue': '#29AAE3',
-                'primary': {
-                    100: '#EDE6FF',
-                    200: '#DBD0FF',
-                    300: '#C5B3FF',
-                    400: '#AB92FD',
-                    500: '#9272FA',
-                    600: '#764DFB',
-                    700: '#602FFF'
+                gray: {
+                    '01': '#FCFCFD',
+                    '02': '#F3F3F3',
+                    '03': '#F0F0F0',
+                    '04': '#DADADA',
+                    '05': '#D0D5DD',
+                    '06': '#D3D4D5',
+                    '07': '#D6DDEB',
+                    '08': '#A6A6A6',
+                    '09': '#84818A',
+                    '10': '#717171',
+                    '11': '#504F54',
+                    '12': '#404040',
+                    '13': '#2E2C34',
                 },
-                'gray': {
-                    '01': '#FAFAFA',
-                    '02': '#F5F5F5',
-                    '03': '#F6F6F6',
-                    '04': '#F9F9F9',
-                    '05': '#E7E7E7',
-                    '06': '#B0B0B0',
-                    '07': '#888888',
-                    '08': '#6D6D6D',
-                    '09': '#4F4F4F',
-                    '10': '#3D3D3D',
+
+                main: {
+                    dark: '#4640DE',
+                    light: '#4031B8'
                 },
-                blue: {
-                    '01': '#F0FAFF',
-                    '02': '#E0F4FE',
-                    '03': '#B9EAFE',
-                    '04': '#0CB3EB',
-                    '05': '#0091C9',
-                    '06': '#2EC7FA',
-                },
+
                 navy: {
-                    '01': '#07334A',
-                },
-                green: {
-                    '01': '#1BD338',
-                    '02': '#68C200'
-                },
-                'error': '#F04550',
-                orange: {
-                    '01': '#F3742D'
-                },
+                    '01': '#EAEDF7',
+                    '04': '#25324B',
+                    '05': '#1C295A09',
+                    '06': '#1018280D',
+                }
             },
             fontFamily: {
-                inter: ["inter", "sans-serif"],
-                nanum: ["NanumSquareRound", "sans-serif"],
+                manrope: ["Manrope", "sans-serif"],
+                epilogue: ["Epilogue", "sans-serif"],
             },
             screens: {
                 'xs': '390px',
