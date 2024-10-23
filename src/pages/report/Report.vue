@@ -21,10 +21,29 @@ export default {
         DownloadIcon
     },
     data() {
+        const taxReturnSurvey = [
+            {
+                title: 'For the Year (20YY)',
+                type: 'select',
+                options: MONTHS,
+            },
+            {
+                title: 'Amended Return?',
+                type: 'radio',
+                options: [{ label: 'Yes', value: true }, { label: 'No', value: false }]
+            },
+            {
+                title: 'Number of Sheet/s Attached',
+                type: 'input',
+            },
+        ]
         return {
-            MONTHS,
-            typeSelect: '',
-            month: '',
+            formSelectValue: {
+                month: '',
+                typeSelect: '',
+                amendedReturn: false,
+                numberOfSheetAttached: ''
+            },
             openedSelects: {
                 typeSelect: false,
                 month: false,
@@ -32,15 +51,18 @@ export default {
             selectPositions: {
                 typeSelect: { top: 0, left: 0, width: 0 },
                 month: { top: 0, left: 0, width: 0 },
-            }
+            },
+            taxReturnSurvey,
         }
     },
     methods: {
         handleClickOutside(event) {
             const openRefName = Object.keys(this.openedSelects).find(key => this.openedSelects[key]);
+            const isRef = (Array.isArray(this.$refs[openRefName]) ? this.$refs[openRefName][0] : this.$refs[openRefName])
+            const isDropdownRef = (Array.isArray(this.$refs[openRefName]) ? this.$refs[`${openRefName}Dropdown`][0] : this.$refs[`${openRefName}Dropdown`])
             if (
-                this.$refs[openRefName] && !this.$refs[openRefName].contains(event.target)
-                && !this.$refs[`${openRefName}Dropdown`].contains(event.target)
+                isRef && !isRef.contains(event.target)
+                && !isDropdownRef.contains(event.target)
             ) {
                 this.openedSelects[openRefName] = false;
                 document.removeEventListener('click', this.handleClickOutside);
@@ -53,7 +75,8 @@ export default {
                     const scrollTop = window.scrollY || document.documentElement.scrollTop;
                     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
-                    const rect = this.$refs[refName].getBoundingClientRect();
+                    const isRef = Array.isArray(this.$refs[refName]) ? this.$refs[refName][0] : this.$refs[refName]
+                    const rect = isRef.getBoundingClientRect();
                     this.selectPositions[refName].top = rect.bottom + scrollTop
                     this.selectPositions[refName].left = rect.x + scrollLeft
                     this.selectPositions[refName].width = rect.width
@@ -64,7 +87,7 @@ export default {
             document.removeEventListener('click', this.handleClickOutside);
         },
         selectValue(refName, val) {
-            this[refName] = val
+            this.formSelectValue[refName] = val
             this.openedSelects[refName] = false;
             document.removeEventListener('click', this.handleClickOutside);
         },
@@ -92,9 +115,9 @@ export default {
                 <div
                   class="font-bold select w-[376px]"
                   ref="typeSelect"
-                  :class="[!typeSelect ? 'text-gray-08' : 'text-[#151515]', openedSelects.typeSelect && 'rounded-b-none']"
+                  :class="[!formSelectValue.typeSelect ? 'text-gray-08' : 'text-[#151515]', openedSelects.typeSelect && 'rounded-b-none']"
                   @click="() => toggleSelect('typeSelect')"
-                >{{ typeSelect || 'Select Report Type' }}</div>
+                >{{ formSelectValue.typeSelect || 'Select Report Type' }}</div>
                 <Teleport
                   to="body"
                   v-if="openedSelects.typeSelect"
@@ -124,40 +147,84 @@ export default {
                     </button>
                 </div>
                 <div class="border rounded border-gray-07">
-                    <ul>
-                        <li>
-                            <strong>1) For the Month (MM/YYYY)</strong>
-                            <label>
-                                <div
-                                  class="font-bold select w-[376px]"
-                                  ref="month"
-                                  :class="[!month ? 'text-gray-08' : 'text-[#151515]', openedSelects.month && 'rounded-b-none']"
-                                  @click="() => toggleSelect('month')"
-                                >{{ month || 'Select Report Type' }}</div>
-                                <Teleport
-                                  to="body"
-                                  v-if="openedSelects.month"
-                                >
-                                    <ul
-                                      class="select-options text-[#151515]"
-                                      ref="monthDropdown"
-                                      :style="{
-                                        top: selectPositions.month.top + 'px',
-                                        left: selectPositions.month.left + 'px',
-                                        width: selectPositions.month.width + 'px',
-                                    }"
+                    <ul class="grid grid-cols-3 px-3">
+                        <li
+                          v-for="(survey, idx) in taxReturnSurvey"
+                          :key="idx"
+                          class="inline-flex flex-col items-center gap-4 py-3 border-r last-of-type:border-r-0"
+                        >
+                            <div class="inline-flex items-center">
+                                <strong>{{ idx + 1 }}. {{ survey.title }} </strong>
+                                <button
+                                  v-if="survey.type === 'select'"
+                                  class="px-3 py-1 ml-4 border rounded-lg border-main-dark text-main-dark"
+                                >Load</button>
+                            </div>
+                            <fieldset
+                              v-if="survey.type === 'select'"
+                              class="inline-flex flex-col gap-3"
+                            >
+                                <label>
+                                    <div
+                                      class="font-bold w-60 select"
+                                      ref="month"
+                                      :class="[!formSelectValue.month ? 'text-gray-08' : 'text-[#151515]', openedSelects.month && 'rounded-b-none']"
+                                      @click="() => toggleSelect('month')"
+                                    >{{ formSelectValue.month || 'Select Report Type' }}</div>
+                                    <Teleport
+                                      to="body"
+                                      v-if="openedSelects.month"
                                     >
-                                        <li
-                                          v-for="month in MONTHS"
-                                          :key="month"
-                                          @click="() => selectValue('month', month)"
-                                        >{{ month }}</li>
-                                    </ul>
-                                </Teleport>
-                            </label>
-                            <input />
+                                        <ul
+                                          class="select-options text-[#151515]"
+                                          ref="monthDropdown"
+                                          :style="{
+                                            top: selectPositions.month.top + 'px',
+                                            left: selectPositions.month.left + 'px',
+                                            width: selectPositions.month.width + 'px',
+                                        }"
+                                        >
+                                            <li
+                                              v-for="item in survey.options"
+                                              :key="item"
+                                              @click="() => selectValue('month', item)"
+                                            >{{ item }}</li>
+                                        </ul>
+                                    </Teleport>
+                                </label>
+                                <input
+                                  class="w-60 input-field"
+                                  type="text"
+                                />
+                            </fieldset>
+
+                            <fieldset
+                              v-if="survey.type === 'radio'"
+                              class="inline-flex items-center gap-6"
+                            >
+                                <label
+                                  v-for="check in survey.options"
+                                  :key="check.label"
+                                  class="inline-flex items-center mr-4 cursor-pointer last-of-type:mr-0"
+                                >
+                                    <input
+                                      type="radio"
+                                      class="mr-4 radio"
+                                      :value="check.value"
+                                      v-model="formSelectValue.amendedReturn"
+                                    >
+                                    {{ check.label }}
+                                </label>
+                            </fieldset>
+
+                            <fieldset v-if="survey.type === 'input'">
+                                <input class="w-60 input-field" />
+                            </fieldset>
                         </li>
                     </ul>
+                    <h3 class="title">
+                        Part I - Background Information
+                    </h3>
                 </div>
             </form>
         </section>
