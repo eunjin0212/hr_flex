@@ -34,11 +34,11 @@ body {
     }
 
     .input-field {
-        @apply field focus:outline-none focus:ring-offset-0 focus:ring-0;
+        @apply field focus:outline-none focus:ring-offset-0 focus:ring-0 placeholder:text-gray-08 disabled:bg-gray-03 disabled:border-gray-05 disabled:text-gray-10;
     }
 
     .radio {
-        @apply cursor-pointer w-6 h-6 !border !border-gray-05 text-white !outline-none !ring-offset-0 !ring-0 checked:ring-offset-0 checked:outline-none checked:bg-[url('@/assets/icons/radio.png')] checked:bg-no-repeat checked:bg-[length:20px] checked:bg-[2px_3px]
+        @apply cursor-pointer w-6 h-6 !border !border-gray-05 text-white !outline-none !ring-offset-0 !ring-0 checked:ring-offset-0 checked:outline-none checked:bg-[url('@/assets/icons/radio.png')] checked:bg-no-repeat checked:bg-[length:20px] checked:bg-[2px_3px] disabled:bg-[url('@/assets/icons/radio_disabled.png')] disabled:bg-no-repeat disabled:bg-[length:20px] disabled:bg-[2px_3px] disabled:border-gray-05
     }
 
     .title {
